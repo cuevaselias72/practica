@@ -1,0 +1,34 @@
+# Docker
+docker-compose.override.yml
+.dockerignore
+
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+dist/
+build/
+
+# PHP
+vendor/
+composer.lock
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store:Zone.Identifier
+*.zone.identifier
+:Zone.Identifier
+
+# Environment
+.env
+.env.local
+
+# Logs
+*.log

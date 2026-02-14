@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  # Servidor para PHP
+  backend-php:
+    build:
+      context: .
+      dockerfile: Dockerfile.php
+    container_name: servidor_php
+    volumes:
+      - ./backend-php:/var/www/html
+    ports:
+      - "8080:80"
+
+  # Entorno para Node y React
+  frontend-react:
+    image: node:18
+    container_name: app_react
+    volumes:
+      - ./frontend-react:/app
+    working_dir: /app
+    ports:
+      - "3000:3000"
+    command: sh -c "npm install && npm start"
+
+  # Base de datos MySQL
+  db-mysql:
+    image: mysql:8.0
+    container_name: base_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: tap
+    ports:
+      - "3306:3306"
+
+  # Base de datos PostgreSQL
+  db-postgres:
+    image: postgres:15
+    container_name: base_postgres
+    environment:
+      POSTGRES_PASSWORD: password_seguro
+      POSTGRES_DB: practica_db
+    ports:
+      - "5432:5432"
