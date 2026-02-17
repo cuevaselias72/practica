@@ -2,7 +2,7 @@
 class Database
 {
     private $host = "base_mysql";
-    private $db_name = "topicosweb";
+    private $db_name = "tap";
     private $username = "root";
     private $password = "password";
 

@@ -31,8 +31,9 @@ class UserResource
                 extract($row);
                 $user_item = array(
                     "id" => $id,
-                    "name" => $name,
+                    "username" => $username,
                     "email" => $email,
+                    "status" => $status,
                     "created_at" => $created_at
                 );
                 array_push($users_arr["records"], $user_item);
@@ -56,8 +57,9 @@ class UserResource
         if ($this->user->readOne()) {
             $user_arr = array(
                 "id" => $this->user->id,
-                "name" => $this->user->name,
+                "username" => $this->user->username,
                 "email" => $this->user->email,
+                "status" => $this->user->status,
                 "created_at" => $this->user->created_at
             );
 
@@ -76,9 +78,10 @@ class UserResource
 
         $data = json_decode(file_get_contents("php://input"));
 
-        if (!empty($data->name) && !empty($data->email)) {
-            $this->user->name = $data->name;
+        if (!empty($data->username) && !empty($data->email) && !empty($data->password)) {
+            $this->user->username = $data->username;
             $this->user->email = $data->email;
+            $this->user->password_hash = $data->password;
 
             if ($this->user->create()) {
                 http_response_code(201);
@@ -92,7 +95,7 @@ class UserResource
             }
         } else {
             http_response_code(400);
-            echo json_encode(array("message" => "Datos incompletos"));
+            echo json_encode(array("message" => "Datos incompletos (username, email y password requeridos)"));
         }
     }
 
@@ -105,8 +108,8 @@ class UserResource
 
         $this->user->id = $id;
 
-        if (!empty($data->name) && !empty($data->email)) {
-            $this->user->name = $data->name;
+        if (!empty($data->username) && !empty($data->email)) {
+            $this->user->username = $data->username;
             $this->user->email = $data->email;
 
             if ($this->user->update()) {
@@ -118,7 +121,7 @@ class UserResource
             }
         } else {
             http_response_code(400);
-            echo json_encode(array("message" => "Datos incompletos"));
+            echo json_encode(array("message" => "Datos incompletos (username y email requeridos)"));
         }
     }
 
